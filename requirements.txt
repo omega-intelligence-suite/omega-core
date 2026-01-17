@@ -1,0 +1,19 @@
+# Core
+python-dotenv==1.0.0
+
+# Database (Fixe websockets à 12.0 pour satisfaire Supabase)
+supabase==2.3.4
+realtime==1.0.6
+websockets==12.0
+psycopg2-binary==2.9.11
+
+# Exchange API
+python-binance==1.0.19
+
+# AI/LLM & Others
+groq
+requests==2.31.0
+python-telegram-bot==20.7
+loguru==0.7.2
+schedule==1.2.1
+python-dateutil==2.8.2
