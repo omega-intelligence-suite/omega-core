@@ -51,6 +51,8 @@ if [ "$SKIP_ENV" != true ]; then
     read -p "Enter Finnhub API Key: " finnhub_key
     read -p "Enter CryptoPanic API Key: " cp_key
 
+    read -p "Enter CoinGecko API Key: " cg_key
+
     read -p "Enter Telegram Bot Token (optional): " tg_token
     read -p "Enter Telegram Chat ID (optional): " tg_id
 
@@ -82,6 +84,12 @@ BINANCE_API_SECRET=$binance_secret
 CRYPTOPANIC_API_KEY=$cp_key
 GNEWS_API_KEY=$gnews_key
 FINNHUB_API_KEY=$finnhub_key
+
+# COINGECKO
+COINGECKO_API_KEY=$cg_key
+
+# OMEGA
+OMEGA_OWNER_ID=$omega_owner_id
 EOF
     echo -e "${GREEN}✅ .env file created.${NC}\n"
 fi
