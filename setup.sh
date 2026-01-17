@@ -57,7 +57,7 @@ if [ "$SKIP_ENV" != true ]; then
     read -p "Enter Binance API Key: " binance_key
     read -p "Enter Binance API Secret: " binance_secret
 
-    cat <<EOF > .env.dev
+    cat <<EOF > .env
 # OMEGA CONFIG
 SUPABASE_URL=$sb_url
 SUPABASE_KEY=$sb_key
