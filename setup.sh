@@ -37,6 +37,13 @@ if [ "$SKIP_ENV" != true ]; then
 
     read -p "Enter Supabase URL: " sb_url
     read -p "Enter Supabase Service Role Key: " sb_key
+    read -p "Enter Supabase DB Host: " sb_db_host
+    read -p "Enter Supabase DB Port: " sb_db_port
+    read -p "Enter Supabase DB Name: " sb_db_name
+    read -p "Enter Supabase DB User: " sb_db_user
+    read -p "Enter Supabase DB Password: " sb_db_password
+
+    read -p "Enter OMEGA Owner ID: " omega_owner_id
 
     read -p "Enter Groq API Key: " groq_key
 
@@ -54,6 +61,11 @@ if [ "$SKIP_ENV" != true ]; then
 # OMEGA CONFIG
 SUPABASE_URL=$sb_url
 SUPABASE_KEY=$sb_key
+SUPABASE_DB_HOST=$sb_db_host
+SUPABASE_DB_PORT=$sb_db_port
+SUPABASE_DB_NAME=$sb_db_name
+SUPABASE_DB_USER=$sb_db_user
+SUPABASE_DB_PASSWORD=$sb_db_password
 
 # AI CONFIG
 GROQ_API_KEY=$groq_key
