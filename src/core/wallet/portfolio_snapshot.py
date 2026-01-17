@@ -3,6 +3,7 @@ import requests
 class PortfolioSnapshot:
   def __init__(self, core):
      self.core = core
+     self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def get_exchange_rate(self):
     """Récupère le taux de change USD/EUR (1 USD = X EUR)"""
@@ -63,10 +64,10 @@ class PortfolioSnapshot:
 
       snap_result = self.core.db.execute(
         """INSERT INTO portfolio_snapshots
-            (total_value_eur, total_invested_eur, btc_price_usd, daily_pnl_eur, usd_eur_rate)
-            VALUES (%s, %s, %s, %s, %s)
+            (total_value_eur, total_invested_eur, btc_price_usd, daily_pnl_eur, usd_eur_rate, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s)
             RETURNING id""",
-        (total_value_eur, total_invested_eur, btc_price_usd, total_value_eur - total_invested_eur, usd_to_eur)
+        (total_value_eur, total_invested_eur, btc_price_usd, total_value_eur - total_invested_eur, usd_to_eur, self.OWNER_ID)
       )
 
       snapshot_id = snap_result[0]['id']
@@ -98,8 +99,8 @@ class PortfolioSnapshot:
 
         self.core.db.execute("""
           INSERT INTO portfolio_assets_history
-          (snapshot_id, symbol, name, balance, price_at_snapshot, value_eur, value_usd, asset_type)
-          VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+          (snapshot_id, symbol, name, balance, price_at_snapshot, value_eur, value_usd, asset_type, user_id)
+          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
           snapshot_id,
           asset['symbol'],
@@ -108,7 +109,8 @@ class PortfolioSnapshot:
           p_orig,
           v_eur,
           v_usd,
-          asset.get('type', '')
+          asset.get('type', ''),
+          self.OWNER_ID
         ))
 
       print(f"✅ Snapshot réussi. Valeur: {total_value_eur:.2f}€ | BTC: ${btc_price_usd:,.0f}")

@@ -7,6 +7,7 @@ from src.domain.ai import AI
 class CryptoPanicNewsIngestion:
   def __init__(self, core):
     self.core = core
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     news = self.fetch_news()
@@ -87,8 +88,8 @@ class CryptoPanicNewsIngestion:
     if analysis['score'] > 6:
       self.core.db.execute("""
         INSERT INTO news_signals
-        (external_id, title, description, url, source_name, currencies, impact_score, summary_short, sentiment, published_at, impact_justification, action_signal, narrative, source_name)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        (external_id, title, description, url, source_name, currencies, impact_score, summary_short, sentiment, published_at, impact_justification, action_signal, narrative, source_name, user_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
       """, (
         str(post['id']),
         post['title'],
@@ -103,7 +104,8 @@ class CryptoPanicNewsIngestion:
         analysis['impact_justification'],
         analysis['action_signal'],
         analysis['narrative'],
-        "CryptoPanic"
+        "CryptoPanic",
+        self.OWNER_ID
       ))
 
       self.core.db.connection.commit()

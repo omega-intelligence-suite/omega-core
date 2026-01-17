@@ -4,6 +4,7 @@ from datetime import datetime
 class StocksIntelligence:
   def __init__(self, core):
     self.core = core
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     print("🔄 Starting Stocks Intelligence analysis...")
@@ -14,10 +15,11 @@ class StocksIntelligence:
 
     self.core.db.execute("""
       INSERT INTO stocks_briefs
-      (summary)
-      VALUES (%s)
+      (summary, user_id)
+      VALUES (%s, %s)
     """, (
       analysis['summary'],
+      self.OWNER_ID
     ))
 
     return True

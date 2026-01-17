@@ -8,6 +8,7 @@ class GNewsNewsIngestion:
     def __init__(self, core):
         self.core = core
         self.gnews_api_key = os.getenv("GNEWS_API_KEY")
+        self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
     def run(self):
       # Implémentation de l'ingestion des nouvelles depuis GNews
@@ -42,7 +43,7 @@ class GNewsNewsIngestion:
             self.core.db.execute(
               """
               INSERT INTO news_signals
-              (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name)
+              (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name, user_id)
               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
               """,
               (
@@ -58,7 +59,8 @@ class GNewsNewsIngestion:
                 analysis['impact_justification'],
                 analysis['action_signal'],
                 analysis['narrative'],
-                "GNews"
+                "GNews",
+                self.OWNER_ID
               )
             )
 

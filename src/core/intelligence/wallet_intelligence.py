@@ -4,6 +4,7 @@ import json
 class WalletIntelligence:
   def __init__(self, core):
     self.core = core
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     fetched_data = self.fetch_portfolio_data()
@@ -13,14 +14,15 @@ class WalletIntelligence:
 
     self.core.db.execute("""
       INSERT INTO wallet_briefs
-      (summary, risk_score, narrative_score, velocity_score, btc_accumulation_index)
-      VALUES (%s, %s, %s, %s, %s)
+      (summary, risk_score, narrative_score, velocity_score, btc_accumulation_index, user_id)
+      VALUES (%s, %s, %s, %s, %s, %s)
     """, (
       analysis['summary'],
       analysis['risk_score'],
       analysis['narrative_score'],
       analysis['velocity_score'],
-      analysis['btc_accumulation_index']
+      analysis['btc_accumulation_index'],
+      self.OWNER_ID
     ))
     return True
 

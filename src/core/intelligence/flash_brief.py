@@ -38,12 +38,13 @@ class FlashBrief:
     # Sauvegarde en DB
     self.core.db.execute("""
       INSERT INTO flash_briefs
-      (brief, recommendation, global_mood)
-      VALUES (%s, %s, %s)
+      (brief, recommendation, global_mood, user_id)
+      VALUES (%s, %s, %s, %s)
     """, (
       flash_brief_analysis['brief'],
       flash_brief_analysis['recommendation'],
-      flash_brief_analysis['global_mood']
+      flash_brief_analysis['global_mood'],
+      self.OWNER_ID
     ))
 
 

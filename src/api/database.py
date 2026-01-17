@@ -11,6 +11,7 @@ class Database:
     self.DBNAME = os.getenv("SUPABASE_DB_NAME")
     self.connection = None
     self.cursor = None
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def connect(self):
     try:
@@ -22,9 +23,19 @@ class Database:
         dbname=self.DBNAME,
         cursor_factory=RealDictCursor  # Returns results as dictionaries
       )
-      print("Connection successful!")
+      print("Connection successful!", self.OWNER_ID)
       self.cursor = self.connection.cursor()
-      return self.connection
+
+      if self.OWNER_ID:
+        print("Setting context for User:", self.OWNER_ID)
+        self.cursor.execute("SET ROLE authenticated;")
+        self.cursor.execute(
+            "SELECT set_config('request.jwt.claim.sub', %s, false);",
+            (self.OWNER_ID,)
+        )
+
+        print(f"Connection successful! Context set for User: {self.OWNER_ID}")
+        return self.connection
 
     except Exception as e:
       print(f"Failed to connect: {e}")
@@ -52,3 +63,16 @@ class Database:
     except Exception as e:
       print(f"Database query failed: {e}")
       return None
+
+  def insert(self, table, data_dict):
+        """
+        Force l'injection de l'OWNER_ID pour respecter la RLS du Cloud.
+        """
+        data_dict['user_id'] = self.OWNER_ID
+
+        columns = data_dict.keys()
+        values = [data_dict[col] for col in columns]
+
+        query = f"INSERT INTO public.{table} ({', '.join(columns)}) VALUES ({', '.join(['%s'] * len(values))})"
+
+        return self.execute(query, values)

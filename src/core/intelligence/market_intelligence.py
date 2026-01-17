@@ -9,6 +9,7 @@ class MarketIntelligence:
     self.core = core
     self.telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
     self.telegram_token = os.getenv('TELEGRAM_BOT_TOKEN')
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     news = self.core.db.execute("""
@@ -28,12 +29,13 @@ class MarketIntelligence:
 
     self.core.db.execute("""
       INSERT INTO market_briefs
-      (brief, focus, sentiment)
-      VALUES (%s, %s, %s)
+      (brief, focus, sentiment, user_id)
+      VALUES (%s, %s, %s, %s)
     """, (
       analysis['brief'],
       analysis['focus'],
-      analysis['sentiment']
+      analysis['sentiment'],
+      self.OWNER_ID
     ))
 
     self.dispatch_market_analysis(analysis['brief'], analysis['sentiment'], analysis['focus'])

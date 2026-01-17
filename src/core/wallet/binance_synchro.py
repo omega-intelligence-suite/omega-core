@@ -5,6 +5,7 @@ class BinanceSynchro:
   def __init__(self, core):
     self.client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_API_SECRET'))
     self.core = core
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     print("Running Binance synchronization...")
@@ -60,9 +61,9 @@ class BinanceSynchro:
     else:
       # Asset doesn't exist - create new entry
       self.core.db.execute(
-        """INSERT INTO user_assets (symbol, balance, type)
-           VALUES (%s, %s, 'CRYPTO')""",
-        (symbol, balance)
+        """INSERT INTO user_assets (symbol, balance, type, user_id)
+           VALUES (%s, %s, 'CRYPTO', %s)""",
+        (symbol, balance, self.OWNER_ID)
       )
       self.core.db.commit()
       print(f"  Created {symbol}: {balance}")

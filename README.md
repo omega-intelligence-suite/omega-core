@@ -18,7 +18,7 @@ The installation is fully automated to ensure maximum stability on any Linux sys
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/ayvroud/omega-core.git
+git clone https://github.com/omega-intelligence-suite/omega-core.git
 cd omega-core
 
 # 2. Make the setup script executable
@@ -105,5 +105,5 @@ docker rm omega-core
 ---
 
 ## 🧱 Mandatory Prerequisites (Cloud)
-Before launching the Engine, you must have an operational OMEGA-Cloud instance. If you haven't configured your database yet: 👉 [Visit the OMEGA-Cloud repository](https://github.com/ayvroud/omega-cloud) to initialize your SQL schema.
+Before launching the Engine, you must have an operational OMEGA-Cloud instance. If you haven't configured your database yet: 👉 [Visit the OMEGA-Cloud repository](https://github.com/omega-intelligence-suite/omega-cloud) to initialize your SQL schema.
 

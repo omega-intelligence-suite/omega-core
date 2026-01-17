@@ -7,6 +7,7 @@ class FinnhubNewsIngestion:
   def __init__(self, core):
     self.core = core
     self.finnhub_api_key = os.getenv("FINNHUB_API_KEY")
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
     self.macro_focus_keywords = [
       "stock market",
       "economy",
@@ -60,8 +61,8 @@ class FinnhubNewsIngestion:
           self.core.db.execute(
             """
             INSERT INTO news_signals
-            (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
               str(news['id']),
@@ -76,7 +77,8 @@ class FinnhubNewsIngestion:
               analysis['impact_justification'],
               analysis['action_signal'],
               analysis['narrative'],
-              "Finnhub_Crypto"
+              "Finnhub_Crypto",
+              self.OWNER_ID
             )
           )
 
@@ -129,8 +131,8 @@ class FinnhubNewsIngestion:
           self.core.db.execute(
             """
             INSERT INTO news_signals
-            (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
               str(post['id']),
@@ -145,7 +147,8 @@ class FinnhubNewsIngestion:
               analysis['impact_justification'],
               analysis['action_signal'],
               analysis['narrative'],
-              "Finnhub"
+              "Finnhub",
+              self.OWNER_ID
             )
           )
 

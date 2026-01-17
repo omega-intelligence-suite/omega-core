@@ -20,4 +20,4 @@ fi
 
 # Run the main script with mode argument
 echo "Starting application in '$MODE' mode..."
-python main.py "$MODE"
+python3 main.py "$MODE"
