@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 
 from src.domain.news import News
 from src.domain.ai import AI

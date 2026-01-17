@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import os
 
 class StocksIntelligence:
   def __init__(self, core):

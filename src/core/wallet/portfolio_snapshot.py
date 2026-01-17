@@ -1,4 +1,5 @@
 import requests
+import os
 
 class PortfolioSnapshot:
   def __init__(self, core):

@@ -113,11 +113,14 @@ class AssetsPriceSynchro:
         [current_price, change_24h] = self._get_stock_prices(asset['symbol'], stock_data_cache)
 
       if current_price is not None and change_24h is not None:
-        self.core.db.execute(
-          """UPDATE user_assets
-              SET current_price = %s, change_24h = %s, last_price_sync_at = NOW()
-              WHERE id = %s""",
-          (current_price, change_24h, asset['id']))
+        try:
+          self.core.db.execute(
+            """UPDATE user_assets
+                SET current_price = %s, change_24h = %s, last_price_sync_at = NOW()
+                WHERE id = %s""",
+            (current_price, change_24h, asset['id']))
+        except Exception as e:
+          print(f"❌ Error updating {asset['symbol']}: {str(e)[:100]}")
 
       if current_price is not None:
         print(f"✅ {asset['symbol']}: ${current_price} ({change_24h:+.2f}%)")
