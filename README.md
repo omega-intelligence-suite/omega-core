@@ -10,7 +10,10 @@ Designed to run 24/7 on lightweight infrastructure (Raspberry Pi, NAS, VPS), it 
 
 
 
----
+## 🧱 Mandatory Prerequisites (Cloud)
+Before launching the Engine, you must have an operational OMEGA-Cloud instance. If you haven't configured your database yet: 👉 [Visit the OMEGA-Cloud repository](https://github.com/omega-intelligence-suite/omega-cloud) to initialize your SQL schema.
+
+
 
 ## 🚀 Quick Start (Installation)
 
@@ -28,7 +31,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
----
+
 
 ## 🛠 What the Setup Wizard Does
 The setup.sh script handles all the heavy lifting:
@@ -42,7 +45,7 @@ The setup.sh script handles all the heavy lifting:
 4. **Containerization**: Builds the optimized Docker image and launches the service in "detached" mode (background).
 
 
----
+
 
 
 ## 📅 Scheduling (Engine Heartbeat)
@@ -62,7 +65,7 @@ Once launched, the Engine follows a strict schedule defined in scheduler.py:
 | 11:50 PM | wallet:snapshot | AI Wallet Intelligence generation |
 
 
----
+
 
 ## 🐳 Container Management
 The engine runs within a Docker container named omega-core. Here are the essential commands:
@@ -92,7 +95,7 @@ docker start omega-core
 docker rm omega-core
 ```
 
----
+
 
 ## 🔒 Security & Privacy
 
@@ -101,9 +104,4 @@ docker rm omega-core
 - **Isolated**: The Docker container sandboxes the engine from the rest of your system.
 
 - **Stateless**: The Engine does not store data locally; everything is secured within your own Supabase instance via Row Level Security (RLS) policies.
-
----
-
-## 🧱 Mandatory Prerequisites (Cloud)
-Before launching the Engine, you must have an operational OMEGA-Cloud instance. If you haven't configured your database yet: 👉 [Visit the OMEGA-Cloud repository](https://github.com/omega-intelligence-suite/omega-cloud) to initialize your SQL schema.
 
