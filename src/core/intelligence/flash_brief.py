@@ -1,8 +1,10 @@
 import json
+import os
 
 class FlashBrief:
   def __init__(self, core):
     self.core = core
+    self.OWNER_ID = os.getenv("OMEGA_OWNER_ID")
 
   def run(self):
     # 1. Récupération des données nécessaires depuis ta DB
