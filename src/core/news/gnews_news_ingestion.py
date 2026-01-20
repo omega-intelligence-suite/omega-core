@@ -27,7 +27,7 @@ class GNewsNewsIngestion:
         # Check if news already exists
         existing = self.core.db.execute(
           "SELECT id FROM news_signals WHERE external_id = %s",
-          (post['id'],)
+          (str(post['id']),)
         )
 
         if not existing or len(existing) == 0:
@@ -44,10 +44,10 @@ class GNewsNewsIngestion:
               """
               INSERT INTO news_signals
               (external_id, title, description, content, published_at, url, impact_score, summary_short, sentiment, impact_justification, action_signal, narrative, source_name, user_id)
-              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
               """,
               (
-                post['id'],
+                str(post['id']),
                 post['title'],
                 post['description'],
                 post['content'],
